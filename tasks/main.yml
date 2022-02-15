@@ -1,0 +1,35 @@
+---
+# tasks file for adrianjuhl.jasypt
+
+- name: Create jasypt install directory
+  file:
+    dest: "/usr/local/bin/jasypt"
+    state: directory
+  become: true
+
+- name: Unarchive jasypt
+  unarchive:
+    src: "https://github.com/jasypt/jasypt/releases/download/jasypt-1.9.3/jasypt-1.9.3-dist.zip"
+    dest: "/usr/local/bin/jasypt"
+    copy: false
+  become: true
+
+- name: Configure jasypt 'current' directory link
+  file:
+    src: "/usr/local/bin/jasypt/jasypt-1.9.3"
+    dest: "/usr/local/bin/jasypt/current"
+    state: link
+  become: true
+
+- name: Set user executable file permission for scripts
+  file:
+    path: "/usr/local/bin/jasypt/current/bin/{{ item.filename }}"
+    state: file
+    mode: "0755"
+  loop:
+    - { filename: 'decrypt.sh' }
+    - { filename: 'digest.sh' }
+    - { filename: 'encrypt.sh' }
+    - { filename: 'listAlgorithms.sh' }
+  become: true
+
