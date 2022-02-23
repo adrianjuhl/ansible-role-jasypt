@@ -2,34 +2,51 @@
 # tasks file for adrianjuhl.jasypt
 
 - name: Create jasypt install directory
-  file:
+  ansible.builtin.file:
     dest: "/usr/local/bin/jasypt"
     state: directory
+    mode: "0755"
   become: true
 
 - name: Unarchive jasypt
-  unarchive:
+  ansible.builtin.unarchive:
     src: "https://github.com/jasypt/jasypt/releases/download/jasypt-1.9.3/jasypt-1.9.3-dist.zip"
     dest: "/usr/local/bin/jasypt"
     copy: false
   become: true
 
 - name: Configure jasypt 'current' directory link
-  file:
+  ansible.builtin.file:
     src: "/usr/local/bin/jasypt/jasypt-1.9.3"
     dest: "/usr/local/bin/jasypt/current"
     state: link
   become: true
 
-- name: Set user executable file permission for scripts
-  file:
+- name: Patch each script to use an improved method for determining the directory that the script resides in
+  # Use a method to determine the directory that the script resides in that
+  # also works when the script is invoked via a sybolic link.
+  # See https://stackoverflow.com/a/1482133
+  ansible.builtin.replace:
     path: "/usr/local/bin/jasypt/current/bin/{{ item.filename }}"
-    state: file
+    regexp: 'BIN_DIR=`dirname \$0`'
+    replace: 'BIN_DIR="$(dirname "$(readlink -f "${0}")")"'
     mode: "0755"
   loop:
     - { filename: 'decrypt.sh' }
     - { filename: 'digest.sh' }
     - { filename: 'encrypt.sh' }
     - { filename: 'listAlgorithms.sh' }
+  become: true
+
+- name: Configure a link for each script
+  ansible.builtin.file:
+    src: "/usr/local/bin/jasypt/current/bin/{{ item.filenamebase }}.sh"
+    dest: "/usr/local/bin/jasypt_{{ item.filenamebase }}"
+    state: link
+  loop:
+    - { filenamebase: 'decrypt' }
+    - { filenamebase: 'digest' }
+    - { filenamebase: 'encrypt' }
+    - { filenamebase: 'listAlgorithms' }
   become: true
 

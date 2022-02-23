@@ -20,10 +20,19 @@ None.
 
 Example Playbook
 ----------------
+```
+- hosts: servers
+  roles:
+    - { role: adrianjuhl.jasypt }
 
-    - hosts: servers
-      roles:
-         - { role: adrianjuhl.jasypt }
+or
+
+- hosts: servers
+  tasks:
+    - name: Install jasypt
+      include_role:
+        name: adrianjuhl.jasypt
+```
 
 License
 -------
