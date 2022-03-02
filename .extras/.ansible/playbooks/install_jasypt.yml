@@ -1,0 +1,7 @@
+---
+- name: Install jasypt
+  hosts: localhost
+  tasks:
+    - name: Install jasypt
+      include_role:
+        name: adrianjuhl.jasypt
