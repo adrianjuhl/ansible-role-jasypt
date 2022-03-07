@@ -2,13 +2,13 @@
 
 Installs [jasypt](http://www.jasypt.org).
 
-The installation places the jasypt shell scripts (and other resources contained in the jasypt archive) within /usr/local/bin/jasypt/ and then creates symbolic links (to the jasypt shell scripts) within /usr/local/bin/.
+The installation places the jasypt shell scripts (and other resources contained in the jasypt archive) within /usr/local/bin/jasypt.d/ and then creates symbolic links (to the jasypt shell scripts) within /usr/local/bin/.
 
 Once installed, the following commands are available:
-- jasypt_decrypt
-- jasypt_digest
-- jasypt_encrypt
-- jasypt_listAlgorithms
+- jasypt-decrypt
+- jasypt-digest
+- jasypt-encrypt
+- jasypt-listAlgorithms
 
 For more information on each of these, see [jasypt CLI tools](http://www.jasypt.org/cli.html).
 
