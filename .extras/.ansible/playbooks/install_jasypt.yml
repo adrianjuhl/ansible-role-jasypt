@@ -1,7 +1,9 @@
 ---
-- name: Install jasypt
-  hosts: localhost
+- name: "Install jasypt"
+  hosts: "localhost"
   tasks:
-    - name: Install jasypt
+    - name: "Install jasypt"
       include_role:
-        name: adrianjuhl.jasypt
+        name: "adrianjuhl.jasypt"
+        apply:
+          become: "{{ install_jasypt_playbook__install_jasypt__requires_become }}"

@@ -1,5 +1,7 @@
 ---
 # defaults file for adrianjuhl.jasypt
 
-adrianjuhl__jasypt__version: "1.9.3"
-adrianjuhl__jasypt__install_directory: "/usr/local/bin/jasypt.d"
+# The version of jasypt to install.
+adrianjuhl__jasypt__jasypt_version: "1.9.3"
+
+adrianjuhl__jasypt__install_bin_directory: "/usr/local/bin"
